@@ -1,0 +1,19 @@
+plugins {
+	id 'org.spongepowered.plugin' version '0.6'
+}
+
+apply plugin: 'java'
+
+group = 'io.github.codeblocteam'
+version = '0.1'
+description = 'Rocket Launchers plugin'
+
+repositories {
+    jcenter()
+}
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.21'
+	compile 'org.spongepowered:spongeapi:5.0.0'
+
+    testCompile 'junit:junit:4.12'
+}
