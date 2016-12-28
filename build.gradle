@@ -6,7 +6,7 @@ apply plugin: 'java'
 
 group = 'io.github.codeblocteam'
 version = '0.1'
-description = 'Rocket Launchers plugin'
+description = 'Ray Launchers plugin'
 
 repositories {
     jcenter()
