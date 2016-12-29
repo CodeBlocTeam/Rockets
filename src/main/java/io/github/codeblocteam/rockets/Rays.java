@@ -7,6 +7,7 @@ import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.item.inventory.InteractItemEvent;
+import org.spongepowered.api.event.world.ExplosionEvent;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -14,7 +15,9 @@ import org.spongepowered.api.item.inventory.ItemStackSnapshot;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.util.blockray.BlockRay;
+import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
+import org.spongepowered.api.world.explosion.Explosion;
 
 @Plugin(id = "rays_codebloc", name = "Rays", version = "0.1")
 public class Rays {
@@ -31,10 +34,10 @@ public class Rays {
 		}
 		
 		Player player = (Player) event.getCause().first(Player.class).get();
-		
+		/*
 		stack.setQuantity(stack.getQuantity() - 1);
 		player.setItemInHand(HandTypes.MAIN_HAND, stack);
-		
+		*/
 		RayLauncher launcher = new RayLauncher();
 		
 		BlockRay<World> ray = BlockRay.from(player)
@@ -52,5 +55,19 @@ public class Rays {
 		
 		launcher.rayProcess(ray, player, rayType);
 		
+	}
+	
+	@Listener
+	public void onPreExplosionEvent(ExplosionEvent.Pre event) {
+		Location<World> location = event.getExplosion().getLocation();
+		event.setExplosion(
+				Explosion.builder()
+				.canCauseFire(true)
+				.shouldBreakBlocks(true)
+				.shouldDamageEntities(true)
+				.location(location)
+				.radius(16)
+				.build()
+				);
 	}
 }
